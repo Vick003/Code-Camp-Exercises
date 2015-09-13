@@ -264,7 +264,7 @@ function unite(arr1, arr2, arr3) {
     in a string to their corresponding HTML entities.
 */
 
-function convert(str) {
+function convert(str) {   /* & = &amp;  < = &lt;  > = &gt;  ' = &apos;    " = &quot;*/
 
     var found_matches = str.match(/[&<>"']g/);
     if (found_matches == null) {
@@ -295,3 +295,52 @@ function convert(str) {
     console.log(str);
     return str;
 }
+
+/* ------------------ */
+
+function convert(str) {
+
+        return String(str).replace(/&/g, '&amp;')
+                            .replace(/</g,'&lt;')
+                            .replace(/>/g,'&gt;')
+                            .replace(/"/g,'&quot;')
+                            .replace(/'/g,"&apos;");
+                            
+}
+
+
+/*  ---------------------------------------------   */
+
+
+/* Working Code for Spinal Tap*/
+function spinalCase(str) {
+   var space = /[_\s]/g,
+       camel_check = /([A-Z]{1}[a-z]{1})/g,
+       display = '',
+       str_array = str.split(''),
+       indexes = [],
+       counter = 0,
+       matchArray;
+  // test argument string to see if there are spaces/underscores
+  if (space.test(str)) {
+     // if string has spaces, run this code
+     str = str.replace(space, '-').toLowerCase();
+     return str;
+  }else{
+    //code to split string up, add '-', join, and lowercase
+    while((matchArray = camel_check.exec(str)) != null){
+        indexes.push(matchArray.index);
+    }
+
+    for(var i = 0; i<indexes.length; i++){
+    str_array.splice(indexes[i]+counter, 0, '-');
+    counter++;
+    }
+    str_array = str_array.join('').toLowerCase();
+    return str_array;
+  }
+  
+}
+
+spinalCase('This Is Spinal Tap');
+/*----------End of Spinal Tap--------------*/
