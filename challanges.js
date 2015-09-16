@@ -1,5 +1,73 @@
 /* Bonfires */
 
+
+/* Factorial of a Number (Using Recursion)
+
+*/
+
+function factorial(n) {
+    //Establish base case
+    if (n == 0) {
+        return 1;
+    } else {
+        //Run recursive case
+        return n * factorial(n - 1);
+    }
+}
+
+/* Use while loop for factorial */
+
+function factorial(n) {
+    var total = 1;
+    while (n > 0) {
+        total *= n;
+        n--;
+    }
+}
+
+/*-- End of Factorial  --*/
+
+/* Determining  a Palindrome */
+
+// A recursive approach
+
+function palindrome(str) {
+    var list,
+        str = str.toLowerCase(),
+        str = str.replace(/[^\w_]+/g, ''),
+        len = str.length,
+        space_indexes = [],
+        new_str;
+    if (str.length <= 1) {
+        return true;
+    } else if (str[0] == str[len - 1]) {
+        list = str.split('');
+        new_str = list.join('');
+        new_str = str.slice(1, len - 1);
+        return palindrome(new_str);
+    } else {
+        return false;
+    }
+}
+
+
+// An iterative approach
+
+function is_Palindrome(str) {
+    var str = str.toLowerCase(),
+        str = str.replace(/[^\w_]+/g, ''),
+        len = str.length;
+    for (var i = 0; i < len / 2; i++) {
+        if (str[i] !== str[(len - 1) - i]) {
+            return false;
+        }
+    }
+    console.log(str);
+    return true;
+}
+
+
+/* End of Palindrome Challenges */
 /* ----Chunky Monkey---- 
  Write a function, called chunk that splits an array (first argument) into groups the length of size (second argument) and returns them as a multidimensional array.
 */
@@ -264,7 +332,7 @@ function unite(arr1, arr2, arr3) {
     in a string to their corresponding HTML entities.
 */
 
-function convert(str) {   /* & = &amp;  < = &lt;  > = &gt;  ' = &apos;    " = &quot;*/
+function convert(str) { /* & = &amp;  < = &lt;  > = &gt;  ' = &apos;    " = &quot;*/
 
     var found_matches = str.match(/[&<>"']g/);
     if (found_matches == null) {
@@ -300,12 +368,12 @@ function convert(str) {   /* & = &amp;  < = &lt;  > = &gt;  ' = &apos;    " = &q
 
 function convert(str) {
 
-        return String(str).replace(/&/g, '&amp;')
-                            .replace(/</g,'&lt;')
-                            .replace(/>/g,'&gt;')
-                            .replace(/"/g,'&quot;')
-                            .replace(/'/g,"&apos;");
-                            
+    return String(str).replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, "&apos;");
+
 }
 
 
@@ -314,33 +382,132 @@ function convert(str) {
 
 /* Working Code for Spinal Tap*/
 function spinalCase(str) {
-   var space = /[_\s]/g,
-       camel_check = /([A-Z]{1}[a-z]{1})/g,
-       display = '',
-       str_array = str.split(''),
-       indexes = [],
-       counter = 0,
-       matchArray;
-  // test argument string to see if there are spaces/underscores
-  if (space.test(str)) {
-     // if string has spaces, run this code
-     str = str.replace(space, '-').toLowerCase();
-     return str;
-  }else{
-    //code to split string up, add '-', join, and lowercase
-    while((matchArray = camel_check.exec(str)) != null){
-        indexes.push(matchArray.index);
+    var space = /[_\s]/g,
+        camel_check = /([A-Z]{1}[a-z]{1})/g,
+        display = '',
+        str_array = str.split(''),
+        indexes = [],
+        counter = 0,
+        matchArray;
+    // test argument string to see if there are spaces/underscores
+    if (space.test(str)) {
+        // if string has spaces, run this code
+        str = str.replace(space, '-').toLowerCase();
+        return str;
+    } else {
+        //code to split string up, add '-', join, and lowercase
+        while ((matchArray = camel_check.exec(str)) != null) {
+            indexes.push(matchArray.index);
+        }
+
+        for (var i = 0; i < indexes.length; i++) {
+            str_array.splice(indexes[i] + counter, 0, '-');
+            counter++;
+        }
+        str_array = str_array.join('').toLowerCase();
+        return str_array;
     }
 
-    for(var i = 0; i<indexes.length; i++){
-    str_array.splice(indexes[i]+counter, 0, '-');
-    counter++;
-    }
-    str_array = str_array.join('').toLowerCase();
-    return str_array;
-  }
-  
 }
 
 spinalCase('This Is Spinal Tap');
 /*----------End of Spinal Tap--------------*/
+
+
+/*  DNA Pairing  
+    
+    The DNA strand is missing the pairing element. Take each character, 
+    get its pair, and return the results as a 2d array.
+    Base pairs are a pair of AT and CG. Match the missing element to the provided character.
+    Return the provided character as the first element in each array.
+    For example, for the input GCG, return [['G', 'C'], ['C','G'],['G', 'C']]
+    The charater and its pair are paired up in an array, and all the arrays are grouped into one     encapsulating array.
+*/
+
+function pair(str) {
+    // get length of str and loop through
+    var len = str.length,
+        counter = 0,
+        list = str.split('');
+
+    for (var i = 0; i < len; i++) {
+        switch (list[i]) {
+        case 'A':
+            list.push(['A', 'T']);
+            break;
+        case 'C':
+            list.push(['C', 'G']);
+            break;
+        case 'T':
+            list.push(['T', 'A']);
+            break;
+        case 'G':
+            list.push(['G', 'C']);
+            break;
+        }
+    }
+    while (counter < len) {
+        list.shift();
+        counter++;
+    }
+    console.log(list);
+    return list;
+}
+
+
+
+/*--- End of DNA Pairing  ---*/
+
+/*---------------------------*/
+
+
+/*--Pig Latin --*/
+function translate(str) {
+    var first_letter,
+        new_str,
+        consonant_check = /^[^aeiou]+/,
+        counter = 0,
+        split_array = str.split(''),
+        len = str.length;
+    /*test if first letter is a vowel
+      if so, concatenate way to end of string    
+    */
+    if (!consonant_check.test(str[counter])) {
+        return str + 'way';
+    } else {
+        //while word starts with a consonant, shift and add first_letter +'ay' to end
+        while (consonant_check.test(str[counter])) {
+            first_letter = split_array.shift();
+            split_array.push(first_letter);
+            counter++;
+        }
+        new_str = split_array.join('');
+        new_str += 'ay';
+        return new_str;
+    }
+}
+/*--End of Pig Latin--*/
+
+/*
+  Sum of all odd Fibonacci numbers
+*/
+function sumFibs(num) {
+    var prevNumber = 0;
+    var currNumber = 1;
+    var result = 0;
+    while (currNumber <= num) {
+        if (currNumber % 2 !== 0) {
+            result += currNumber;
+        }
+        var added = currNumber + prevNumber;
+        prevNumber = currNumber;
+        currNumber = added;
+    }
+
+    return result;
+}
+
+
+
+
+/* End of Sum of all Fibonacci numbers*/
